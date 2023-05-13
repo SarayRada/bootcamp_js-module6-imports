@@ -11,7 +11,7 @@ export const cambiarEstado = () : Estado => {
     if (partida.puntuacionUsuario >= 6 && partida.puntuacionUsuario <= 7 ){
         return "CASI";
     }
-    if (partida.puntuacionUsuario = 7.5 ){
+    if (partida.puntuacionUsuario == 7.5 ){
         return "WINNER";
     }
     else 
