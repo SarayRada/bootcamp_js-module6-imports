@@ -1,4 +1,5 @@
 import { partida, Estado } from "./modelo";
+import { cambiarEstado } from "./motor";
 
 export const insertarAlResultadoTexto = (textoAMostrar: string) => {
     const resultado = document.getElementById("resultado");
@@ -174,8 +175,14 @@ const activarEstadoGameOver = () : Estado  => {
 }
 
 export const comprobarPuntuación = () => {
-   if (partida.puntuacionUsuario > 7.5) {
+    if (partida.puntuacionUsuario == 7.5) {
+        mostrarMensajePlantarse(cambiarEstado());
+        disabledButtonDameCarta();
+        disabledButtonPlantarse();
+        activarBotónNuevaPartida(comprobarEstadoBotónDameCarta());
+    }
+    if (partida.puntuacionUsuario > 7.5) {
        mostrarMensajeGameOver(activarEstadoGameOver());
        activarBotónNuevaPartida(comprobarEstadoBotónDameCarta());
-   }
+    }
 }
