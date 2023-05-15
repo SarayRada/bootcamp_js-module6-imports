@@ -9,6 +9,10 @@ export const insertarAlResultadoTexto = (textoAMostrar: string) => {
     }
 }
 
+export const sumarPuntuación = (number: number) => {
+    partida.puntuacionUsuario += number;
+}
+
 const imprimirCarta = (url: string) => {
     const ElementoCarta = document.getElementById("imagen-carta");
     if(ElementoCarta && ElementoCarta instanceof HTMLImageElement) {

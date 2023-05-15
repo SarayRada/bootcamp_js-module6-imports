@@ -1,6 +1,7 @@
 import { partida } from "./modelo";
-import { dameCartaAleatoria, cambiarEstado, sumarPuntuación } from "./motor";
+import { dameCartaAleatoria, cambiarEstado, calcularPuntuaciónSegúnCarta } from "./motor";
 import { 
+    sumarPuntuación,
     mostrarCarta, 
     mostrarPuntuación, 
     mostrarMensajePlantarse,
@@ -21,7 +22,7 @@ import {
 const jugarCarta = () => {
     const cartaAleatoria = dameCartaAleatoria();
     mostrarCarta(cartaAleatoria); 
-    sumarPuntuación(cartaAleatoria);
+    sumarPuntuación(calcularPuntuaciónSegúnCarta(cartaAleatoria));
     mostrarPuntuación();
     comprobarPuntuación();
 }
@@ -48,7 +49,7 @@ const saberMas = () => {
     disabledButtonPlantarse();
     const cartaAleatoria = dameCartaAleatoria();
     mostrarCarta(cartaAleatoria);
-    sumarPuntuación(cartaAleatoria);
+    sumarPuntuación(calcularPuntuaciónSegúnCarta(cartaAleatoria));    
     mostrarPuntuación();
     mostrarMensajePosibleResultado();
     disabledButtonQueHubiesePasado();

@@ -26,8 +26,8 @@ export const dameCartaAleatoria = () : number => {
     return numeroAleatorio;
  }
 
-export const sumarPuntuación = (carta:number) :void => {
-    carta <= 7 
-        ? partida.puntuacionUsuario += carta
-        : partida.puntuacionUsuario += 0.5;
+export const calcularPuntuaciónSegúnCarta = (carta:number) : number => {
+    return carta <= 7 
+        ? carta
+        : 0.5;
 }
