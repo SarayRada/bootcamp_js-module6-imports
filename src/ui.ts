@@ -1,5 +1,5 @@
 import { partida, Estado } from "./modelo";
-import { cambiarEstado } from "./motor";
+import { cambiarEstado, dameCartaAleatoria, crearNumeroAleatorio, calcularPuntuaciónSegúnCarta} from "./motor";
 
 export const insertarAlResultadoTexto = (textoAMostrar: string) => {
     const resultado = document.getElementById("resultado");
@@ -183,4 +183,39 @@ export const comprobarPuntuación = () => {
        mostrarMensajeGameOver(activarEstadoGameOver());
        activarBotónNuevaPartida(comprobarEstadoBotónDameCarta());
     }
+}
+
+export const jugarCarta = () => {
+    const cartaAleatoria = dameCartaAleatoria(crearNumeroAleatorio());
+    mostrarCarta(cartaAleatoria); 
+    sumarPuntuación(calcularPuntuaciónSegúnCarta(cartaAleatoria));
+    mostrarPuntuación();
+    comprobarPuntuación();
+}
+
+export const plantase = () => {
+    const estadoActual = cambiarEstado();
+    mostrarMensajePlantarse(estadoActual);
+    disabledButtonDameCarta();
+    activarBotónNuevaPartida(comprobarEstadoBotónDameCarta());
+    activarBotónSaberMás();
+}
+
+export const nuevaPartida = () => {
+    activarBotones();
+    partida.puntuacionUsuario = 0;
+    mostrarPuntuación();
+    disabledButtonNuevaPartida();
+    disabledButtonQueHubiesePasado();
+    mostrarCarta(0);
+}
+
+export const saberMas = () => {
+    disabledButtonPlantarse();
+    const cartaAleatoria = dameCartaAleatoria(crearNumeroAleatorio());
+    mostrarCarta(cartaAleatoria);
+    sumarPuntuación(calcularPuntuaciónSegúnCarta(cartaAleatoria));    
+    mostrarPuntuación();
+    mostrarMensajePosibleResultado();
+    disabledButtonQueHubiesePasado();
 }
