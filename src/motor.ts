@@ -28,8 +28,8 @@ export const dameCartaAleatoria = (numero: number) : number => {
         : numero;
 }
 
- export const calcularPuntuaciónSegúnCarta = (carta:number) : number => {
+ export const calcularPuntuación = (carta:number) : number => {
     return carta <= 7 
-        ? carta
-        : 0.5;
+        ? carta + partida.puntuacionUsuario
+        : 0.5 + partida.puntuacionUsuario;
 }

@@ -2,13 +2,9 @@ import {
     jugarCarta,
     plantase,
     nuevaPartida,
-    saberMas,
-    mostrarPuntuación
+    saberMas
 } from "./ui";
 
-
-
-document.addEventListener("DOMContentLoaded", mostrarPuntuación);
 
 const botonDarCarta = document.getElementById("dameCarta");
 botonDarCarta instanceof HTMLButtonElement

@@ -1,5 +1,5 @@
 import { partida, Estado } from "./modelo";
-import { cambiarEstado, dameCartaAleatoria, crearNumeroAleatorio, calcularPuntuaciónSegúnCarta} from "./motor";
+import { cambiarEstado, dameCartaAleatoria, crearNumeroAleatorio, calcularPuntuación} from "./motor";
 
 export const insertarAlResultadoTexto = (textoAMostrar: string) => {
     const resultado = document.getElementById("resultado");
@@ -8,8 +8,8 @@ export const insertarAlResultadoTexto = (textoAMostrar: string) => {
         : console.error("mostrarPuntuación: el elemento con id resultado no tiene valor");
 }
 
-export const sumarPuntuación = (number: number) => {
-    partida.puntuacionUsuario += number;
+export const setPuntuación = (number: number) => {
+    partida.puntuacionUsuario = number;
 }
 
 const imprimirCarta = (url: string) => {
@@ -168,6 +168,8 @@ const activarEstadoGameOver = () : Estado  => {
     return "GAME_OVER";
 }
 
+document.addEventListener("DOMContentLoaded", mostrarPuntuación);
+
 const activarEstadoWinner = () => {
     mostrarMensajePlantarse(cambiarEstado());
     disabledButtonDameCarta();
@@ -188,7 +190,7 @@ export const comprobarPuntuación = () => {
 export const jugarCarta = () => {
     const cartaAleatoria = dameCartaAleatoria(crearNumeroAleatorio());
     mostrarCarta(cartaAleatoria); 
-    sumarPuntuación(calcularPuntuaciónSegúnCarta(cartaAleatoria));
+    setPuntuación(calcularPuntuación(cartaAleatoria));
     mostrarPuntuación();
     comprobarPuntuación();
 }
@@ -214,7 +216,7 @@ export const saberMas = () => {
     disabledButtonPlantarse();
     const cartaAleatoria = dameCartaAleatoria(crearNumeroAleatorio());
     mostrarCarta(cartaAleatoria);
-    sumarPuntuación(calcularPuntuaciónSegúnCarta(cartaAleatoria));    
+    setPuntuación(calcularPuntuación(cartaAleatoria));    
     mostrarPuntuación();
     mostrarMensajePosibleResultado();
     disabledButtonQueHubiesePasado();
