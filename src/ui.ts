@@ -1,11 +1,11 @@
 import { partida, Estado } from "./modelo";
-import { cambiarEstado, dameCartaAleatoria, crearNumeroAleatorio, calcularPuntuación} from "./motor";
+import { obtenerEstado, dameCartaAleatoria, crearNumeroAleatorio, calcularPuntuación} from "./motor";
 
 export const insertarAlResultadoTexto = (textoAMostrar: string) => {
     const resultado = document.getElementById("resultado");
     resultado instanceof HTMLElement
         ? resultado.innerHTML = textoAMostrar
-        : console.error("mostrarPuntuación: el elemento con id resultado no tiene valor");
+        : console.error("insertarAlResultadoTexto: el elemento con id resultado no tiene valor");
 }
 
 export const setPuntuación = (number: number) => {
@@ -56,17 +56,7 @@ export const mostrarCarta = (carta: number) : void => {
     }
 }
 
-export const mostrarPuntuación = () => {
-    insertarAlResultadoTexto(`Tu puntuación actual es: ${partida.puntuacionUsuario}`);
-}
-
-export const mostrarMensajeGameOver = (estado : Estado) => {
-    if (estado==="GAME_OVER") {
-        insertarAlResultadoTexto(`GAME OVER: tu puntuación es ${partida.puntuacionUsuario}`);
-    }
-}
-
-export const mostrarMensajePlantarse = (estado: Estado) => {
+export const mostrarMensajeSegúnEstado = (estado: Estado) => {
     switch(estado){
         case "CONSERVADOR":
             insertarAlResultadoTexto("Has sido muy conservador.");
@@ -84,10 +74,6 @@ export const mostrarMensajePlantarse = (estado: Estado) => {
             insertarAlResultadoTexto("No se cómo hemos acabado aquí!");
             break;
      }
-}
-
-export const mostrarMensajePosibleResultado = () => {
-    insertarAlResultadoTexto(`Tu puntuación hubiese sido: ${partida.puntuacionUsuario}`);
 }
 
 export const disabledButtonDameCarta = () :void =>{
@@ -144,9 +130,9 @@ export const activarBotónNuevaPartida = (disabled: boolean) => {
 export const activarBotónSaberMás = () => {
     const botón = document.getElementById('queHubiesePasado');
 
-        botón instanceof HTMLButtonElement
-            ? botón.disabled = false
-            : console.error("activarBotónNuevaPartida: el elemento con el id nuevaPartida es null")
+    botón instanceof HTMLButtonElement
+        ? botón.disabled = false
+        : console.error("activarBotónNuevaPartida: el elemento con el id nuevaPartida es null")
     
 }
 
@@ -162,28 +148,31 @@ export const activarBotones = () => {
     }
 }
 
-const activarEstadoGameOver = () : Estado  => {
+const desactivarBotonesGameOver = ()  => {
     disabledButtonDameCarta();
     disabledButtonPlantarse();
-    return "GAME_OVER";
 }
 
-document.addEventListener("DOMContentLoaded", mostrarPuntuación);
-
-const activarEstadoWinner = () => {
-    mostrarMensajePlantarse(cambiarEstado());
+const partidaGanada = () => {
+    mostrarMensajeSegúnEstado(obtenerEstado());
     disabledButtonDameCarta();
     disabledButtonPlantarse();
     activarBotónNuevaPartida(comprobarEstadoBotónDameCarta());
 }
 
+const partidaPerdida = () => {
+    obtenerEstado();
+    desactivarBotonesGameOver();
+    insertarAlResultadoTexto(`GAME OVER: tu puntuación es ${partida.puntuacionUsuario}`);
+    activarBotónNuevaPartida(comprobarEstadoBotónDameCarta());
+}
+
 export const comprobarPuntuación = () => {
     if (partida.puntuacionUsuario == 7.5) {
-        activarEstadoWinner();
+        partidaGanada();
     }
     if (partida.puntuacionUsuario > 7.5) {
-       mostrarMensajeGameOver(activarEstadoGameOver());
-       activarBotónNuevaPartida(comprobarEstadoBotónDameCarta());
+        partidaPerdida();
     }
 }
 
@@ -191,13 +180,14 @@ export const jugarCarta = () => {
     const cartaAleatoria = dameCartaAleatoria(crearNumeroAleatorio());
     mostrarCarta(cartaAleatoria); 
     setPuntuación(calcularPuntuación(cartaAleatoria));
-    mostrarPuntuación();
+    insertarAlResultadoTexto(`Tu puntuación actual es: ${partida.puntuacionUsuario}`);
     comprobarPuntuación();
 }
 
 export const plantase = () => {
-    const estadoActual = cambiarEstado();
-    mostrarMensajePlantarse(estadoActual);
+    const estadoActual = obtenerEstado();
+    mostrarMensajeSegúnEstado(estadoActual);
+    disabledButtonPlantarse();
     disabledButtonDameCarta();
     activarBotónNuevaPartida(comprobarEstadoBotónDameCarta());
     activarBotónSaberMás();
@@ -206,7 +196,7 @@ export const plantase = () => {
 export const nuevaPartida = () => {
     activarBotones();
     partida.puntuacionUsuario = 0;
-    mostrarPuntuación();
+    insertarAlResultadoTexto(`Tu puntuación actual es: ${partida.puntuacionUsuario}`);
     disabledButtonNuevaPartida();
     disabledButtonQueHubiesePasado();
     mostrarCarta(0);
@@ -217,7 +207,6 @@ export const saberMas = () => {
     const cartaAleatoria = dameCartaAleatoria(crearNumeroAleatorio());
     mostrarCarta(cartaAleatoria);
     setPuntuación(calcularPuntuación(cartaAleatoria));    
-    mostrarPuntuación();
-    mostrarMensajePosibleResultado();
+    insertarAlResultadoTexto(`Tu puntuación hubiese sido: ${partida.puntuacionUsuario}`);
     disabledButtonQueHubiesePasado();
 }
