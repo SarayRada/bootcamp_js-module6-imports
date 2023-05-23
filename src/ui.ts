@@ -127,7 +127,6 @@ const partidaGanada = () => {
 }
 
 const partidaPerdida = () => {
-    obtenerEstado();
     cambiarEstadoBotónPlantarse(false);
     cambiarEstadoBotónDameCarta(false)
     mostrarMensajeSegúnEstado(obtenerEstado());
