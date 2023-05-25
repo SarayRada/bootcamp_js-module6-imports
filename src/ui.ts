@@ -7,6 +7,7 @@ const insertarAlResultadoTexto = (textoAMostrar: string) => {
         ? resultado.innerHTML = textoAMostrar
         : console.error("insertarAlResultadoTexto: el elemento con id resultado no tiene valor");
 }
+
 const imprimirCarta = (url: string) => {
     const elementoCarta = document.getElementById("imagen-carta");
     elementoCarta instanceof HTMLImageElement
