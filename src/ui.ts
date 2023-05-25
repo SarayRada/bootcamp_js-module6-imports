@@ -1,4 +1,4 @@
-import { partida, Estado } from "./modelo";
+import { partida, Estado, setPuntuación } from "./modelo";
 import { obtenerEstado, dameCartaAleatoria, crearNumeroAleatorio, calcularPuntuación} from "./motor";
 
 const insertarAlResultadoTexto = (textoAMostrar: string) => {
@@ -7,11 +7,6 @@ const insertarAlResultadoTexto = (textoAMostrar: string) => {
         ? resultado.innerHTML = textoAMostrar
         : console.error("insertarAlResultadoTexto: el elemento con id resultado no tiene valor");
 }
-
-export const setPuntuación = (number: number) => {
-    partida.puntuacionUsuario = number;
-}
-
 const imprimirCarta = (url: string) => {
     const elementoCarta = document.getElementById("imagen-carta");
     elementoCarta instanceof HTMLImageElement
